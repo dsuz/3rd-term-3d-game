@@ -7,9 +7,11 @@ using UnityEngine;
 /// </summary>
 public class CoinController : MonoBehaviour
 {
+    // 爆発エフェクトのプレハブ
+    [SerializeField] GameObject m_effectPrefab;
+
     void Start()
     {
-
     }
 
     void Update()
@@ -23,6 +25,8 @@ public class CoinController : MonoBehaviour
     void Taken()
     {
         Debug.Log("coin taken.");
+        GameObject effect = Instantiate(m_effectPrefab);    // 爆発エフェクトを生成する
+        effect.transform.position = this.transform.position;
         Destroy(this.gameObject);
     }
 
