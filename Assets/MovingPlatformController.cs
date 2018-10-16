@@ -33,7 +33,6 @@ public class MovingPlatformController : MonoBehaviour
         transform.position = pos;
     }
 
-    /* -- この部分は動作確認後にコメント インすること
     // プレイヤーが上に乗った時、それを子オブジェクトとすることによりプレイヤーはオブジェクトと一緒に動く
     private void OnCollisionEnter(Collision collision)
     {
@@ -47,5 +46,4 @@ public class MovingPlatformController : MonoBehaviour
         if (collision.collider.gameObject.tag == "Player")
             collision.collider.gameObject.transform.SetParent(null);
     }
-    */
 }
