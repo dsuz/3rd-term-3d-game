@@ -7,6 +7,9 @@ using UnityEngine;
 /// </summary>
 public class CoinController : MonoBehaviour
 {
+    /// <summary>コインを取った時に追加される点数</summary>
+    [SerializeField] int m_score = 100;
+
     // 爆発エフェクトのプレハブ
     [SerializeField] GameObject m_effectPrefab;
 
@@ -27,6 +30,10 @@ public class CoinController : MonoBehaviour
         Debug.Log("coin taken.");
         GameObject effect = Instantiate(m_effectPrefab);    // 爆発エフェクトを生成する
         effect.transform.position = this.transform.position;
+        // スコアを加算する
+        GameObject go = GameObject.Find("Manager");
+        GameManager manager = go.GetComponent<GameManager>();
+        manager.AddScore(m_score);
         Destroy(this.gameObject);
     }
 

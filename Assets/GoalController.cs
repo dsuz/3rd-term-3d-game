@@ -23,6 +23,9 @@ public class GoalController : MonoBehaviour
     void Goal()
     {
         Debug.Log("Goal.");
+        GameObject go = GameObject.Find("Manager");
+        GameManager manager = go.GetComponent<GameManager>();
+        manager.Goal();
     }
 
     private void OnTriggerEnter(Collider other)
