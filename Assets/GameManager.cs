@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;   // UI (uGUI) を使うために追加した
 
 /// <summary>
 /// ゲーム全体をコントロールする
@@ -18,6 +19,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] float m_timeLimit = 30f;
     // サウンドマネージャー
     SoundManager m_soundManager;
+    // タイムを表示する Text
+    [SerializeField] Text m_timeText;
 
     void Start()
     {
@@ -27,11 +30,20 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        // 経過時間を測り、タイムオーバーを判定する
+        // 経過時間を測る
         m_elapsedTime += Time.deltaTime;
-        if (m_isInGame && m_elapsedTime > m_timeLimit)
+
+        if (m_isInGame)
         {
-            TimeOver();
+            // タイムの表示を更新する
+            string timeString = "Time: " + m_elapsedTime.ToString("F3") + " / " + m_timeLimit.ToString("F3");   // 書式指定文字列については「C# ToString 書式」で検索するとよいでしょう
+            m_timeText.text = timeString;
+
+            // タイムオーバーを判定する
+            if (m_elapsedTime > m_timeLimit)
+            {
+                TimeOver();
+            }
         }
     }
 
@@ -78,5 +90,6 @@ public class GameManager : MonoBehaviour
         Debug.Log("Time over.");
         m_isInGame = false;
         m_soundManager.StopBgm();
+        m_timeText.color = Color.red;   // タイムオーバーしたらタイム表示を赤くする
     }
 }
