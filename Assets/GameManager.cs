@@ -5,6 +5,7 @@ using UnityEngine;
 /// <summary>
 /// ゲーム全体をコントロールする
 /// </summary>
+[RequireComponent(typeof(SoundManager))]
 public class GameManager : MonoBehaviour
 {
     // ゲーム中かどうかを判定するフラグ
@@ -15,9 +16,12 @@ public class GameManager : MonoBehaviour
     int m_score = 0;
     // ステージクリアの制限時間
     [SerializeField] float m_timeLimit = 30f;
+    // サウンドマネージャー
+    SoundManager m_soundManager;
 
     void Start()
     {
+        m_soundManager = GetComponent<SoundManager>();
         StartGame();
     }
 
@@ -40,6 +44,7 @@ public class GameManager : MonoBehaviour
         m_score = 0;
         m_elapsedTime = 0f;
         m_isInGame = true;
+        m_soundManager.PlayBgm();
     }
 
     /// <summary>
@@ -49,6 +54,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Goal.");
         m_isInGame = false;
+        m_soundManager.StopBgm();
     }
 
     /// <summary>
@@ -60,6 +66,7 @@ public class GameManager : MonoBehaviour
         {
             m_score += score;
             Debug.Log("Score: " + m_score);
+            m_soundManager.PlaySeGetItem();
         }
     }
 
@@ -70,5 +77,6 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Time over.");
         m_isInGame = false;
+        m_soundManager.StopBgm();
     }
 }
