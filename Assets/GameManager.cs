@@ -21,6 +21,8 @@ public class GameManager : MonoBehaviour
     SoundManager m_soundManager;
     // タイムを表示する Text
     [SerializeField] Text m_timeText;
+    // ゲームスタートを表示する Animation
+    [SerializeField] Animation m_startAnim;
 
     void Start()
     {
@@ -52,11 +54,29 @@ public class GameManager : MonoBehaviour
     /// </summary>
     void StartGame()
     {
+        StartCoroutine(StartGameImpl());
+    }
+
+    /// <summary>
+    /// ゲーム開始時の処理
+    /// </summary>
+    /// <returns></returns>
+    IEnumerator StartGameImpl()
+    {
         Debug.Log("Start Game.");
+        // アニメーションを再生する
+        m_startAnim.Play();
+        // 再生中は待つ
+        while (m_startAnim.isPlaying)
+        {
+            yield return new WaitForEndOfFrame();
+        }
+        // 再生が終わったら初期化してゲームを始める
         m_score = 0;
         m_elapsedTime = 0f;
         m_isInGame = true;
         m_soundManager.PlayBgm();
+        yield return null;
     }
 
     /// <summary>
