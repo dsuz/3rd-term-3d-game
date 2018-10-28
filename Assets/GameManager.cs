@@ -21,7 +21,9 @@ public class GameManager : MonoBehaviour
     SoundManager m_soundManager;
     // タイムを表示する Text
     [SerializeField] Text m_timeText;
-    // ゲームスタートを表示する Animation
+    // スコアを表示する Text
+    [SerializeField] Text m_scoreText;
+// ゲームスタートを表示する Animation
     [SerializeField] Animation m_startAnim;
 
     void Start()
@@ -73,6 +75,7 @@ public class GameManager : MonoBehaviour
         }
         // 再生が終わったら初期化してゲームを始める
         m_score = 0;
+        m_scoreText.text = "Score: " + m_score; // スコアの表示を初期化する
         m_elapsedTime = 0f;
         m_isInGame = true;
         m_soundManager.PlayBgm();
@@ -99,6 +102,7 @@ public class GameManager : MonoBehaviour
         {
             m_score += score;
             Debug.Log("Score: " + m_score);
+            m_scoreText.text = "Score: " + m_score;
             m_soundManager.PlaySeGetItem();
         }
     }
