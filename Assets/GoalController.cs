@@ -7,6 +7,9 @@ using UnityEngine;
 /// </summary>
 public class GoalController : MonoBehaviour
 {
+    // エフェクトのプレハブ
+    [SerializeField] GameObject m_effectPrefab;
+
     void Start()
     {
 
@@ -32,6 +35,7 @@ public class GoalController : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
+            Instantiate(m_effectPrefab, gameObject.transform.position, Quaternion.identity);
             Goal();
         }
     }

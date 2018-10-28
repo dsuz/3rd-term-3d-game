@@ -875,6 +875,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 393647739759545efb2ca7524c82c929, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_effectPrefab: {fileID: 100002, guid: 180149b1a35449044a27b451e816d2de, type: 2}
 --- !u!65 &773588784
 BoxCollider:
   m_ObjectHideFlags: 0
