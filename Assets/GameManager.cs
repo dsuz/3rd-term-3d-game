@@ -23,8 +23,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] Text m_timeText;
     // スコアを表示する Text
     [SerializeField] Text m_scoreText;
-// ゲームスタートを表示する Animation
+    // ゲームスタートを表示する Animation
     [SerializeField] Animation m_startAnim;
+    // ゴールを表示する Animation
+    [SerializeField] Animation m_goalAnim;
 
     void Start()
     {
@@ -66,6 +68,8 @@ public class GameManager : MonoBehaviour
     IEnumerator StartGameImpl()
     {
         Debug.Log("Start Game.");
+        // Goal の時を隠す
+        m_goalAnim.gameObject.SetActive(false);
         // アニメーションを再生する
         m_startAnim.Play();
         // 再生中は待つ
@@ -91,6 +95,8 @@ public class GameManager : MonoBehaviour
         m_isInGame = false;
         m_soundManager.StopBgm();
         m_soundManager.PlaySeGoal();
+        m_goalAnim.gameObject.SetActive(true);
+        m_goalAnim.Play();
     }
 
     /// <summary>
