@@ -14,6 +14,8 @@ public class SoundManager : MonoBehaviour
     [SerializeField] AudioClip m_getItem;
     // ゴールした時の SE
     [SerializeField] AudioClip m_goal;
+    // タイムオーバー時の SSE
+    [SerializeField] AudioClip m_timeOver;
     AudioSource m_audioSource;
 
     void Start()
@@ -61,5 +63,13 @@ public class SoundManager : MonoBehaviour
     public void PlaySeGoal()
     {
         m_audioSource.PlayOneShot(m_goal);
+    }
+
+    /// <summary>
+    /// タイムオーバー時の SE を鳴らす
+    /// </summary>
+    public void PlaySeTimeOver()
+    {
+        m_audioSource.PlayOneShot(m_timeOver);
     }
 }

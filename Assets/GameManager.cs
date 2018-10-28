@@ -87,6 +87,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("Goal.");
         m_isInGame = false;
         m_soundManager.StopBgm();
+        m_soundManager.PlaySeGoal();
     }
 
     /// <summary>
@@ -111,5 +112,6 @@ public class GameManager : MonoBehaviour
         m_isInGame = false;
         m_soundManager.StopBgm();
         m_timeText.color = Color.red;   // タイムオーバーしたらタイム表示を赤くする
+        m_soundManager.PlaySeTimeOver();
     }
 }
