@@ -91,12 +91,15 @@ public class GameManager : MonoBehaviour
     /// </summary>
     public void Goal()
     {
-        Debug.Log("Goal.");
-        m_isInGame = false;
-        m_soundManager.StopBgm();
-        m_soundManager.PlaySeGoal();
-        m_goalAnim.gameObject.SetActive(true);
-        m_goalAnim.Play();
+        if (m_isInGame)
+        {
+            Debug.Log("Goal.");
+            m_isInGame = false;
+            m_soundManager.StopBgm();
+            m_soundManager.PlaySeGoal();
+            m_goalAnim.gameObject.SetActive(true);
+            m_goalAnim.Play();
+        }
     }
 
     /// <summary>
@@ -118,10 +121,13 @@ public class GameManager : MonoBehaviour
     /// </summary>
     void TimeOver()
     {
-        Debug.Log("Time over.");
-        m_isInGame = false;
-        m_soundManager.StopBgm();
-        m_timeText.color = Color.red;   // タイムオーバーしたらタイム表示を赤くする
-        m_soundManager.PlaySeTimeOver();
+        if (m_isInGame)
+        {
+            Debug.Log("Time over.");
+            m_isInGame = false;
+            m_soundManager.StopBgm();
+            m_timeText.color = Color.red;   // タイムオーバーしたらタイム表示を赤くする
+            m_soundManager.PlaySeTimeOver();
+        }
     }
 }
