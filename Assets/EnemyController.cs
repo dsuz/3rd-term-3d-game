@@ -12,6 +12,9 @@ public class EnemyController : MonoBehaviour
     CharacterController m_charCtrl;
     GameObject m_player;
 
+    // 攻撃の影響範囲を表すオブジェクト
+    [SerializeField] AttackController m_attackArea;
+
     // 移動速度
     [SerializeField] float m_speed = 2f;
 
@@ -22,6 +25,8 @@ public class EnemyController : MonoBehaviour
         m_anim.SetFloat("Speed", 1f);   // これで Idle → Walk に遷移する
         m_charCtrl = GetComponent<CharacterController>();
         m_player = GameObject.FindGameObjectWithTag("Player");
+        // 攻撃範囲を無効にする
+        m_attackArea.gameObject.SetActive(false);
     }
 
     void Update()
@@ -44,5 +49,21 @@ public class EnemyController : MonoBehaviour
         // プレイヤーの方を見て、アニメーションを制御する
         transform.LookAt(m_player.transform);
         m_anim.SetTrigger("Attack");
+    }
+
+    /// <summary>
+    /// 攻撃を有効にする
+    /// </summary>
+    void ActivateAttack()
+    {
+        m_attackArea.gameObject.SetActive(true);
+    }
+
+    /// <summary>
+    /// 攻撃を無効にする
+    /// </summary>
+    void DeactivateAttack()
+    {
+        m_attackArea.gameObject.SetActive(false);
     }
 }
