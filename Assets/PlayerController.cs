@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// オブジェクトを 3D 空間で動かしたり、ジャンプさせるコンポーネント
 /// </summary>
-[RequireComponent(typeof(CharacterController))]
+[RequireComponent(typeof(CharacterController), typeof(Animator))]
 public class PlayerController : MonoBehaviour
 {
     // ジャンプ力を調整するパラメーター
@@ -16,12 +16,15 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float m_gravityMultiplier = 1f;
     // 縦方向の速度
     float m_verticalVelocity = 0f;
-    // Character Controller への参照
+    // 同じオブジェクトに追加された Character Controller への参照
     CharacterController m_charCtrl;
+    // 同じオブジェクトに追加された Animator への参照
+    Animator m_anim;
 
     void Start()
     {
         m_charCtrl = GetComponent<CharacterController>();
+        m_anim = GetComponent<Animator>();
     }
 
     void Update()
@@ -46,12 +49,17 @@ public class PlayerController : MonoBehaviour
         // y 軸（垂直方向）の速度を求める
         if (m_charCtrl.isGrounded)  // キャラが設置しているか
         {
+            // アニメーションを制御する
+            m_anim.SetBool("IsGrounded", true);
+            m_anim.SetFloat("Speed", dir.sqrMagnitude); // 着地している時かつ動いている時は Run に遷移する、動いていなければ Idle にとどまる
+
             m_verticalVelocity = 0; // 接地していれば垂直方向の速度はゼロになる
 
             // ジャンプの入力を受け付ける
             if (Input.GetButton("Jump"))
             {
                 m_verticalVelocity += m_jumpPower;
+                m_anim.SetBool("IsGrounded", false);    // Jump に遷移する
             }
         }
         else
