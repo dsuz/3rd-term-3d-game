@@ -27,6 +27,12 @@ public class GameManager : MonoBehaviour
     [SerializeField] Animation m_startAnim;
     // ゴールを表示する Animation
     [SerializeField] Animation m_goalAnim;
+    // HP ゲージ
+    [SerializeField] Slider m_hpGauge;
+    // 最大 HP
+    [SerializeField] int m_maxHp = 100;
+    // HP
+    int m_hp;
 
     void Start()
     {
@@ -58,6 +64,9 @@ public class GameManager : MonoBehaviour
     /// </summary>
     void StartGame()
     {
+        // 初期化
+        m_hp = m_maxHp;
+        RefreshHpGauge();
         StartCoroutine(StartGameImpl());
     }
 
@@ -129,5 +138,35 @@ public class GameManager : MonoBehaviour
             m_timeText.color = Color.red;   // タイムオーバーしたらタイム表示を赤くする
             m_soundManager.PlaySeTimeOver();
         }
+    }
+
+    /// <summary>
+    /// プレイヤーにダメージを与える時に呼ぶ
+    /// </summary>
+    /// <param name="damage">与えるダメージ</param>
+    public void Damage(int damage)
+    {
+        m_hp -= damage;
+        RefreshHpGauge();
+        if (m_hp <= 0)
+        {
+            Die();
+        }
+    }
+
+    /// <summary>
+    /// HP ゲージを更新する。HP が変わった時に呼ぶ
+    /// </summary>
+    void RefreshHpGauge()
+    {
+        m_hpGauge.value = (float) m_hp / m_maxHp;  // float にキャストすることに注意
+    }
+
+    /// <summary>
+    /// プレイヤーが死んだ時に呼ぶ
+    /// </summary>
+    void Die()
+    {
+        Debug.Log("Die.");
     }
 }

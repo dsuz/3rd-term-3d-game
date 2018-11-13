@@ -9,6 +9,7 @@ using UnityEngine;
 public class AttackController : MonoBehaviour
 {
     [SerializeField] float m_attackPower = 15f;
+    [SerializeField] int m_damage = 5;
 
     void Start()
     {
@@ -41,5 +42,7 @@ public class AttackController : MonoBehaviour
         {
             rb.AddForce((transform.forward + Vector3.up).normalized * m_attackPower, ForceMode.Impulse);
         }
+        // ダメージを与える
+        GameObject.FindObjectOfType<GameManager>().Damage(m_damage);
     }
 }
