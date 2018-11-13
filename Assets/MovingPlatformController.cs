@@ -46,4 +46,22 @@ public class MovingPlatformController : MonoBehaviour
         if (collision.collider.gameObject.tag == "Player")
             collision.collider.gameObject.transform.SetParent(null);
     }
+
+    // プレイヤーが上に乗った時、それを子オブジェクトとすることによりプレイヤーはオブジェクトと一緒に動く
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            other.gameObject.transform.SetParent(transform);
+        }
+    }
+
+    // プレイヤーがオブジェクトから離れた時は、親子関係を解除する
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "Player")
+        {
+            other.gameObject.transform.SetParent(null);
+        }
+    }
 }
