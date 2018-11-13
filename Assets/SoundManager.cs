@@ -17,6 +17,8 @@ public class SoundManager : MonoBehaviour
     // タイムオーバー時の SSE
     [SerializeField] AudioClip m_timeOver;
     AudioSource m_audioSource;
+    // タイトル画面のシーン名
+    const string TITLE_SCENE_NAME = "TitleScene";
 
     void Start()
     {
@@ -62,7 +64,7 @@ public class SoundManager : MonoBehaviour
     /// </summary>
     public void PlaySeGoal()
     {
-        m_audioSource.PlayOneShot(m_goal);
+        StartCoroutine(PlaySeAndLoadScene(m_goal, TITLE_SCENE_NAME));
     }
 
     /// <summary>
@@ -70,6 +72,13 @@ public class SoundManager : MonoBehaviour
     /// </summary>
     public void PlaySeTimeOver()
     {
-        m_audioSource.PlayOneShot(m_timeOver);
+        StartCoroutine(PlaySeAndLoadScene(m_timeOver, TITLE_SCENE_NAME));
+    }
+
+    IEnumerator PlaySeAndLoadScene(AudioClip clip, string sceneName)
+    {
+        m_audioSource.PlayOneShot(clip);
+        yield return new WaitForSeconds(clip.length);
+        GetComponent<SceneLoader>().LoadScene(sceneName);
     }
 }

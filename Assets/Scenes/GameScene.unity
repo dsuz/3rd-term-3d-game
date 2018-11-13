@@ -1972,6 +1972,7 @@ GameObject:
   - component: {fileID: 1330967795}
   - component: {fileID: 1330967798}
   - component: {fileID: 1330967797}
+  - component: {fileID: 1330967799}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -2120,6 +2121,19 @@ MonoBehaviour:
   m_getItem: {fileID: 8300000, guid: 0c008ee3ee72a4362a35be25fa5de043, type: 3}
   m_goal: {fileID: 8300000, guid: 2667a0a008b044e218b63df62e2be749, type: 3}
   m_timeOver: {fileID: 8300000, guid: b9eff218e132a4e76be78840eca96fb2, type: 3}
+--- !u!114 &1330967799
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1330967794}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d202c528423e3ee41b320bf11d2aed9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_fadeColor: {r: 0, g: 0, b: 0, a: 1}
+  m_fadeMultiplier: 1
 --- !u!1 &1351608335
 GameObject:
   m_ObjectHideFlags: 0
