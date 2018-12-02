@@ -145,7 +145,7 @@ public class NetworkManager : MonoBehaviourPunCallbacks // Photon Realtime 用�
     public override void OnJoinedRoom()
     {
         Debug.Log("OnJoinedRoom");
-        // SpawnPlayer();
+        SpawnPlayer();
     }
 
     // 特定の部屋への入室に失敗した時
