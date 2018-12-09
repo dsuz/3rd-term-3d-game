@@ -75,6 +75,9 @@ public class CheckController : MonoBehaviourPunCallbacks
         m_photonView.RPC("SetCheck", RpcTarget.All);
     }
 
+    /// <summary>
+    /// Check がクリックされた時、OやXを入れる
+    /// </summary>
     [PunRPC]
     void SetCheck()
     {

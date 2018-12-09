@@ -42,8 +42,12 @@ public class TTTManager : MonoBehaviourPunCallbacks
 
     }
 
+    /// <summary>
+    /// Start ボタンをクリックした時に呼ばれるハンドラ
+    /// </summary>
     public void OnClickStartButton()
     {
+        // 勝負がついていたら切断する
         if (m_status == TttStatus.End)
         {
             PhotonNetwork.Disconnect();
@@ -60,7 +64,7 @@ public class TTTManager : MonoBehaviourPunCallbacks
     {
         Debug.Log("Start Game");
         m_status = TttStatus.Player1;   // ターンをプレイヤー1 から始める
-        SetPlayerTexts(p1nickname, p2nickname);
+        SetPlayerTexts(p1nickname, p2nickname); // プレイヤー名を表示する
         HighlightPlayerText();  // 現在ターン中のプレイヤー側の表示を赤くする
         InitializeAllChecks();  // Check を初期化する
         m_startButton.gameObject.SetActive(false);  // スタートボタンは消す
@@ -76,7 +80,7 @@ public class TTTManager : MonoBehaviourPunCallbacks
             check.SetManager(this); // ステート管理できるように参照を渡す
             check.Enabled = true;   // クリック可能にする
             check.Initialize(); // OXを消す
-            MaskChecks();
+            MaskChecks();   // クリック可能なもの以外はクリックできないようにする
         }
     }
 
@@ -94,11 +98,15 @@ public class TTTManager : MonoBehaviourPunCallbacks
             m_status = TttStatus.Player1;
         }
         HighlightPlayerText();  // プレイヤー表示のハイライトを切り替える
-        MaskChecks();
+        MaskChecks();   // クリック可能なもの以外はクリックできないようにする
     }
 
+    /// <summary>
+    /// クリック可能な check のみクリックできるようにする
+    /// </summary>
     void MaskChecks()
     {
+        // 自分のターンの時は、まだクリックされていない check のみクリック可能にする
         if (PhotonNetwork.IsMasterClient && m_status == TttStatus.Player1)
         {
             UnmaskEmptyChecks();
@@ -109,6 +117,7 @@ public class TTTManager : MonoBehaviourPunCallbacks
         }
         else
         {
+            // 自分のターンではないので、すべての check をクリックできないようにする
             foreach(var check in m_checkArray)
             {
                 check.Enabled = false;
@@ -116,6 +125,9 @@ public class TTTManager : MonoBehaviourPunCallbacks
         }
     }
 
+    /// <summary>
+    /// まだクリックされていない check のみクリック可能にする
+    /// </summary>
     void UnmaskEmptyChecks()
     {
         foreach (var check in m_checkArray)
@@ -124,6 +136,11 @@ public class TTTManager : MonoBehaviourPunCallbacks
         }
     }
 
+    /// <summary>
+    /// プレイヤー名を設定する
+    /// </summary>
+    /// <param name="p1nickname"></param>
+    /// <param name="p2nickname"></param>
     void SetPlayerTexts(string p1nickname, string p2nickname)
     {
         m_txtP1.text = p1nickname;
