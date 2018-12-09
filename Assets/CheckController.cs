@@ -2,17 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+// Photon 用の名前空間を参照する
+using ExitGames.Client.Photon;
+using Photon.Pun;
+using Photon.Realtime;
 
 /// <summary>
 /// Check = OX の一つひとつの枠内にあるOXをコントロールする
 /// </summary>
 [RequireComponent(typeof(Button))]
-public class CheckController : MonoBehaviour
+public class CheckController : MonoBehaviourPunCallbacks
 {
     /// <summary>ターンを管理しているマネージャー</summary>
     TTTManager m_tttManager;
     /// <summary>ボタンの Text</summary>
     Text m_buttonText;
+    PhotonView m_photonView;
 
     /// <summary>
     /// Text つまり O か X か空白かを返す
@@ -46,6 +51,7 @@ public class CheckController : MonoBehaviour
     {
         m_buttonText = GetComponentInChildren<Text>();
         Enabled = false;    // 初期状態ではクリックできないようにする
+        m_photonView = PhotonView.Get(this);
     }
 
     void Update()
@@ -65,6 +71,12 @@ public class CheckController : MonoBehaviour
     /// クリックイベントのハンドラー
     /// </summary>
     public void OnClick()
+    {
+        m_photonView.RPC("SetCheck", RpcTarget.All);
+    }
+
+    [PunRPC]
+    void SetCheck()
     {
         // どちらのターンかに応じて表示を変える
         if (m_tttManager.Status == TTTManager.TttStatus.Player1)
